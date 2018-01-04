@@ -3,6 +3,7 @@ package com.dailyart.bookstoreapplication.bookdb;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import java.util.Date;
 
@@ -10,9 +11,10 @@ import java.util.Date;
  * Created by 27DH on 2018/1/2.
  */
 
-@Entity
+@Entity(tableName = "book")
 public class Book {
     @PrimaryKey
+    @NonNull
     private int id;
     @ColumnInfo(name = "book_name")
     private String bookName;
