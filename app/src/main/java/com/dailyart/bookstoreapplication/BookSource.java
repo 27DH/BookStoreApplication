@@ -25,4 +25,6 @@ public interface BookSource {
     void getBook(@NonNull String bookId, @NonNull GetBookCallback callback);
     void insertBook(@NonNull Book book);
     void deleteBook(@NonNull Book book);
+
+
 }
