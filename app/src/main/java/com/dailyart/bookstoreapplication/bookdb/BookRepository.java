@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 public class BookRepository implements BookSource {
 
     private ExecutorService es = Executors.newFixedThreadPool(1);
-    
+
 
     @Override
     public void getBooks(@NonNull LoadBooksCallback callback) {
@@ -34,5 +34,10 @@ public class BookRepository implements BookSource {
     @Override
     public void deleteBook(@NonNull Book book) {
 
+    }
+
+    @Override
+    public void updateBook(@NonNull Book book) {
+        
     }
 }
