@@ -23,7 +23,10 @@ public class Book {
     private Date publicDate;
     private String press;
     private String isbn;
+    private float price;
     private String category;
+    @ColumnInfo(name = "word_count")
+    private int wordCount;
 
     public Book(int id) {
         this.id = id;
@@ -75,5 +78,21 @@ public class Book {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public int getWordCount() {
+        return wordCount;
+    }
+
+    public void setWordCount() {
+        this.wordCount = wordCount;
     }
 }
