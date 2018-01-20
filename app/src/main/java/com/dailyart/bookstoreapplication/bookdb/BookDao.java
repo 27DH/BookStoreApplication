@@ -18,6 +18,8 @@ public interface BookDao {
     List<Book> loadAll();
     @Query("SELECT * from book where press = :press")
     List<Book> loadByPress(String press);
+    @Query("SELECT * from book where id = :id")
+    Book loadById(int id);
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertBooks(Book... books);
     @Insert

@@ -22,9 +22,10 @@ public interface BookSource {
     }
 
     void getBooks(@NonNull LoadBooksCallback callback);
-    void getBook(@NonNull String bookId, @NonNull GetBookCallback callback);
+    void getBook(@NonNull int bookId, @NonNull GetBookCallback callback);
     void insertBook(@NonNull Book book);
     void deleteBook(@NonNull Book book);
+    void updateBook(@NonNull Book book);
 
 
 }

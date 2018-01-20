@@ -9,11 +9,15 @@ import com.dailyart.bookstoreapplication.BaseView;
 
 public interface BooksContract {
     interface View extends BaseView<Presenter> {
-
+        void showSuccessfullySavedMessage();
+        void showAddTask();
     }
 
     interface Presenter extends BasePresenter {
+        void result(int requestCode, int resultCode);
+        void addBook();
         void loadBook();
         void loadBooks();
+        void addNewBook();
     }
 }

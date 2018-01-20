@@ -1,17 +1,23 @@
 package com.dailyart.bookstoreapplication.booklist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dailyart.bookstoreapplication.R;
 import com.dailyart.bookstoreapplication.bookdb.Book;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,22 +46,36 @@ public class BookFragment extends Fragment implements BooksContract.View{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bookAdapter = new BookAdapter(new ArrayList<Book>(0));
+    }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        bookPresenter.start();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_book, container, false);
+        View root = inflater.inflate(R.layout.books_frag, container, false);
+
+        ListView listView = (ListView) root.findViewById(R.id.booksList);
+        listView.setAdapter(bookAdapter);
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_add_book);
+        fab.setImageResource(R.drawable.ic_add);
+        fab.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                bookPresenter.addBook();
+            }
+        });
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -74,24 +94,29 @@ public class BookFragment extends Fragment implements BooksContract.View{
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 
     @Override
     public void setPresenter(BooksContract.Presenter presenter) {
+        this.bookPresenter = presenter;
+    }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        bookPresenter.result(requestCode,resultCode);
+    }
+
+
+
+    @Override
+    public void showSuccessfullySavedMessage() {
+        Toast.makeText(getContext(), "add successfullly!", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showAddTask() {
+        Intent intent = new Intent(getContext(), AddBookActivity.class);
+        startActivityForResult(intent, AddBookActivity.REQUEST_ADD_TASK);
     }
 
     private static class BookAdapter extends BaseAdapter {
@@ -106,13 +131,17 @@ public class BookFragment extends Fragment implements BooksContract.View{
             notifyDataSetChanged();
         }
 
+        public void setList(List<Book> books) {
+            this.books = books;
+        }
+
         @Override
         public int getCount() {
             return books.size();
         }
 
         @Override
-        public Object getItem(int i) {
+        public Book getItem(int i) {
             return books.get(i);
         }
 
@@ -128,7 +157,16 @@ public class BookFragment extends Fragment implements BooksContract.View{
                 LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
                 rowView = inflater.inflate(R.layout.book_item, viewGroup, false);
             }
-            return null;
+
+            Book book = getItem(i);
+            TextView pressTextView = (TextView) rowView.findViewById(R.id.press);
+            TextView nameTextView = (TextView) rowView.findViewById(R.id.name);
+            TextView authorTextView = (TextView) rowView.findViewById(R.id.author);
+
+            pressTextView.setText(book.getPress());
+            nameTextView.setText(book.getBookName());
+            authorTextView.setText(book.getAuthor());
+            return rowView;
         }
     }
 }
