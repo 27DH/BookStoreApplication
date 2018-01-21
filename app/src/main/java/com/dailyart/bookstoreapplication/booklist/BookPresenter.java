@@ -3,8 +3,12 @@ package com.dailyart.bookstoreapplication.booklist;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 
+import com.dailyart.bookstoreapplication.BookSource;
+import com.dailyart.bookstoreapplication.bookdb.Book;
 import com.dailyart.bookstoreapplication.bookdb.BookRepository;
 import com.dailyart.bookstoreapplication.insert.AddBookActivity;
+
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -29,7 +33,18 @@ public class BookPresenter implements BooksContract.Presenter {
 
     @Override
     public void start() {
-        
+        bookRepository.getBooks(new BookSource.LoadBooksCallback() {
+            @Override
+            public void onBooksLoaded(List<Book> books) {
+                bookView.showBook(books);
+            }
+
+            @Override
+            public void onBooksNotAvailable() {
+
+            }
+        });
+
     }
 
     @Override

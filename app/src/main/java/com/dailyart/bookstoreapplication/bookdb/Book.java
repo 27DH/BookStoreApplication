@@ -19,8 +19,7 @@ public class Book {
     @ColumnInfo(name = "book_name")
     private String bookName;
     private String author;
-    @ColumnInfo(name = "public_date")
-    private Date publicDate;
+
     private String press;
     private String isbn;
     private float price;
@@ -28,7 +27,17 @@ public class Book {
     @ColumnInfo(name = "word_count")
     private int wordCount;
 
-    public Book(int id) {
+    public Book(){
+
+    }
+
+
+    @NonNull
+    public int getId() {
+        return id;
+    }
+
+    public void setId(@NonNull int id) {
         this.id = id;
     }
 
@@ -48,13 +57,6 @@ public class Book {
         this.author = author;
     }
 
-    public Date getPublicDate() {
-        return publicDate;
-    }
-
-    public void setPublicDate(Date publicDate) {
-        this.publicDate = publicDate;
-    }
 
     public String getPress() {
         return press;
@@ -84,15 +86,17 @@ public class Book {
         return price;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
     public int getWordCount() {
         return wordCount;
     }
 
-    public void setWordCount() {
+    public void setWordCount(int wordCount) {
         this.wordCount = wordCount;
     }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+
 }

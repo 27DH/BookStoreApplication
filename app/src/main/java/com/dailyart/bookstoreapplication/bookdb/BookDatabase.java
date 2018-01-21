@@ -8,7 +8,7 @@ import android.content.Context;
 /**
  * Created by 27DH on 2018/1/2.
  */
-@Database(entities = {Book.class}, version = 1)
+@Database(entities = {Book.class}, version = 1 ,exportSchema = false)
 public abstract class BookDatabase extends RoomDatabase {
 
     private static BookDatabase INSTANCE;

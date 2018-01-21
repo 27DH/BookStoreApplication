@@ -20,7 +20,7 @@ public class BookRepository implements BookSource {
     private AppExecutors executor;
     private BookDao bookDao;
 
-    private static volatile BookSource INSTANCE;
+    private static volatile BookRepository INSTANCE;
 
 
     private BookRepository(@NonNull AppExecutors executor, @NonNull BookDao bookDao) {

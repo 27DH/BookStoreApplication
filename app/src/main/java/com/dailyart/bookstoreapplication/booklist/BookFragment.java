@@ -1,5 +1,6 @@
 package com.dailyart.bookstoreapplication.booklist;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,18 +17,12 @@ import android.widget.Toast;
 
 import com.dailyart.bookstoreapplication.R;
 import com.dailyart.bookstoreapplication.bookdb.Book;
+import com.dailyart.bookstoreapplication.insert.AddBookActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link BookFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link BookFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class BookFragment extends Fragment implements BooksContract.View{
 
     private BookAdapter bookAdapter;
@@ -70,28 +65,11 @@ public class BookFragment extends Fragment implements BooksContract.View{
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                bookPresenter.addBook();
+                bookPresenter.addNewBook();
             }
         });
-    }
 
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+        return root;
     }
 
 
@@ -114,9 +92,14 @@ public class BookFragment extends Fragment implements BooksContract.View{
     }
 
     @Override
-    public void showAddTask() {
+    public void showAddBook() {
         Intent intent = new Intent(getContext(), AddBookActivity.class);
         startActivityForResult(intent, AddBookActivity.REQUEST_ADD_TASK);
+    }
+
+    @Override
+    public void showBook(List<Book> books) {
+        bookAdapter.replaceData(books);
     }
 
     private static class BookAdapter extends BaseAdapter {
