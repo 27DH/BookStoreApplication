@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.dailyart.bookstoreapplication.bookdb.BookRepository;
+import com.dailyart.bookstoreapplication.insert.AddBookActivity;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -20,15 +21,15 @@ public class BookPresenter implements BooksContract.Presenter {
     private boolean mFirstLoad = true;
 
     public BookPresenter(@NonNull BookRepository bookRepository, @NonNull BooksContract.View bookView) {
-        bookRepository = checkNotNull(bookRepository, "bookRepository cannot be null");
-        bookView = checkNotNull(bookView, "bookView cannot be null");
+        this.bookRepository = checkNotNull(bookRepository, "bookRepository cannot be null");
+        this.bookView = checkNotNull(bookView, "bookView cannot be null");
 
-        bookView.setPresenter(this);
+        this.bookView.setPresenter(this);
     }
 
     @Override
     public void start() {
-
+        
     }
 
     @Override
@@ -55,6 +56,8 @@ public class BookPresenter implements BooksContract.Presenter {
 
     @Override
     public void addNewBook() {
-        bookView.
+        bookView.showAddBook();
     }
+
+
 }
